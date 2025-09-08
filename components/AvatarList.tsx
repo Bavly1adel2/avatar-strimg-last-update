@@ -18,6 +18,7 @@ interface AvatarListResponse {
   total: number;
   source?: string;
   message?: string;
+  error?: string;
 }
 
 export default function AvatarList() {
