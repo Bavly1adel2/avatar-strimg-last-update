@@ -3,6 +3,19 @@ import { NextResponse } from 'next/server';
 const HEYGEN_API_KEY = process.env.HEYGEN_API_KEY;
 const BASE_API_URL = process.env.NEXT_PUBLIC_BASE_API_URL || 'https://api.heygen.com';
 
+type TestResult = {
+  endpoint: string;
+  path: string;
+  status: number | 'ERROR';
+  ok: boolean;
+  statusText?: string;
+  success?: boolean;
+  data?: unknown;
+  parseError?: string;
+  errorData?: string;
+  error?: string;
+};
+
 export async function GET() {
   try {
     if (!HEYGEN_API_KEY) {
@@ -24,7 +37,7 @@ export async function GET() {
       { path: '/v1/streaming.create_token', name: 'Streaming Token' }
     ];
 
-    const results = [];
+    const results: TestResult[] = [];
 
     for (const endpoint of testEndpoints) {
       try {
@@ -38,7 +51,7 @@ export async function GET() {
           },
         });
 
-        const result = {
+        const result: TestResult = {
           endpoint: endpoint.name,
           path: endpoint.path,
           status: response.status,
